@@ -22,7 +22,8 @@
             ],
             "essential": true,
             "image": "mysql:5.7",
-            "name": "mysql"
+            "name": "mysql",
+            "memory": 128
         },
         {
             "essential": true,
@@ -38,6 +39,7 @@
                 }
             ],
             "name": "nginx",
+            "memory": 128,
             "portMappings": [
                 {
                     "containerPort": 80,
@@ -56,6 +58,7 @@
                 }
             ],
             "name": "php_fpm",
+            "memory": 128,
             "workingDirectory": "/usr/share/nginx/scheduler"
         }
     ],
