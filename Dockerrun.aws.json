@@ -1,80 +1,79 @@
 {
-    "AWSEBDockerrunVersion": 2,
-    "containerDefinitions": [
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "host": {
+        "sourcePath": "./"
+      },
+      "name": "_"
+    },
+    {
+      "host": {
+        "sourcePath": "./docker/nginx/conf.d/default.conf"
+      },
+      "name": "_DockerNginxConf_DDefault_Conf"
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "environment": [
         {
-            "environment": [
-                {
-                    "name": "MYSQL_DATABASE",
-                    "value": "scheduler"
-                },
-                {
-                    "name": "MYSQL_ROOT_PASSWORD",
-                    "value": "secret"
-                },
-                {
-                    "name": "MYSQL_USER",
-                    "value": "brunoba"
-                },
-                {
-                    "name": "MYSQL_PASSWORD",
-                    "value": "password"
-                }
-            ],
-            "essential": true,
-            "image": "mysql:5.7",
-            "name": "mysql",
-            "memory": 128
+          "name": "MYSQL_DATABASE",
+          "value": "scheduler"
         },
         {
-            "essential": true,
-            "image": "nginx:1.15",
-            "mountPoints": [
-                {
-                    "containerPath": "/usr/share/nginx/scheduler",
-                    "sourceVolume": "_"
-                },
-                {
-                    "containerPath": "/etc/nginx/conf.d/default.conf",
-                    "sourceVolume": "_DockerNginxConf_DDefault_Conf"
-                }
-            ],
-            "name": "nginx",
-            "memory": 128,
-            "portMappings": [
-                {
-                    "containerPort": 80,
-                    "hostPort": 8080
-                }
-            ],
-            "workingDirectory": "/usr/share/nginx/scheduler"
+          "name": "MYSQL_ROOT_PASSWORD",
+          "value": "secret"
         },
         {
-            "essential": true,
-            "image": "brunoba93/php_fpm_laravel",
-            "mountPoints": [
-                {
-                    "containerPath": "/usr/share/nginx/scheduler",
-                    "sourceVolume": "_"
-                }
-            ],
-            "name": "php_fpm",
-            "memory": 128,
-            "workingDirectory": "/usr/share/nginx/scheduler"
+          "name": "MYSQL_USER",
+          "value": "brunoba"
+        },
+        {
+          "name": "MYSQL_PASSWORD",
+          "value": "password"
         }
-    ],
-    "family": "",
-    "volumes": [
+      ],
+      "essential": true,
+      "image": "mysql:5.7",
+      "name": "mysql",
+      "memory": 128
+    },
+    {
+      "essential": true,
+      "image": "nginx:1.15",
+      "mountPoints": [
         {
-            "host": {
-                "sourcePath": "./"
-            },
-            "name": "_"
+          "containerPath": "/usr/share/nginx/scheduler",
+          "sourceVolume": "_"
         },
         {
-            "host": {
-                "sourcePath": "./docker/nginx/conf.d/default.conf"
-            },
-            "name": "_DockerNginxConf_DDefault_Conf"
+          "containerPath": "/etc/nginx/conf.d/default.conf",
+          "sourceVolume": "_DockerNginxConf_DDefault_Conf"
         }
-    ]
+      ],
+      "name": "nginx",
+      "memory": 128,
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "hostPort": 80
+        }
+      ],
+      "workingDirectory": "/usr/share/nginx/scheduler"
+    },
+    {
+      "essential": true,
+      "image": "brunoba93/php_fpm_laravel",
+      "mountPoints": [
+        {
+          "containerPath": "/usr/share/nginx/scheduler",
+          "sourceVolume": "_"
+        }
+      ],
+      "name": "php_fpm",
+      "memory": 128,
+      "workingDirectory": "/usr/share/nginx/scheduler"
+    }
+  ]
 }
