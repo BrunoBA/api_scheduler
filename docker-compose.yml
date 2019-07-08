@@ -6,8 +6,6 @@ services:
     working_dir: /usr/share/nginx/scheduler
     networks:
       - backend
-    depends_on:
-      - nginx
     volumes:
       - ./:/usr/share/nginx/scheduler
   nginx:
@@ -17,7 +15,7 @@ services:
     networks:
       - backend
     ports:
-        - "80:80"
+      - "80:80"
     depends_on:
       - mysql
     volumes:
@@ -28,6 +26,10 @@ services:
     container_name: mysql
     volumes:
       - ./docker/mysql/:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    expose:
+      - 3306
     networks:
       - backend
     environment:
