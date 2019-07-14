@@ -29,4 +29,17 @@ class Task extends Model
         }
         return false;
     }
+
+    /**
+     * @return LengthAwarePaginator
+     */
+    public static function getAllByUser ($userId, $search) {
+        $query = self::where('user_id', $userId);
+
+        if ($search != null) {
+            $query->where('content', 'like', "%{$search}%");
+        }
+
+        return $query->paginate(5);
+    }
 }

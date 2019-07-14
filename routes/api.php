@@ -22,6 +22,6 @@ Route::namespace('Api')->group(function () {
         Route::post('logout', 'AuthController@logout');
         Route::post('refresh', 'AuthController@refresh');
 
-        Route::apiResource('tasks', 'AuthController@login');
+        Route::apiResource('tasks', 'TaskController');
     });
 });
